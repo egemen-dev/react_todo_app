@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@types/sortablejs": "^1.15.1"
+    "@types/sortablejs": "^1.15.1",
+    "tailwindcss": "^3.3.2"
   }
 }
