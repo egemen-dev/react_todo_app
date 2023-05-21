@@ -1,7 +1,7 @@
-export default function Task({ children }) {
+export default function Task({ id, key, children }) {
   return (
-    <div>
-      <div>{children}</div>
+    <div id={id} key={key}>
+      {children}
     </div>
   );
 }
