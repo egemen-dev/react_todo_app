@@ -1,31 +1,29 @@
 export default function Toggle() {
+  // Toggle Dark Function
+  function toggleDark() {
+    document.querySelector("html").classList.toggle("dark");
+    console.log(document.querySelector("html").classList.contains("dark"));
+
+    localStorage.setItem(
+      "isDarkMode",
+      document.querySelector("html").classList.contains("dark")
+    );
+  }
+
   return (
-    <label for="AcceptConditions" class="relative h-8 w-14 cursor-pointer">
+    <label for="AcceptConditions" className="relative h-8 w-14 cursor-pointer">
       <input
         type="checkbox"
         id="AcceptConditions"
-        class="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
+        className="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
+        onClick={toggleDark}
       />
 
       <span class="absolute inset-y-0 start-0 z-10 m-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-gray-400 transition-all peer-checked:start-6 peer-checked:text-green-600">
         <svg
-          data-unchecked-icon
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
-
-        <svg
           data-checked-icon
           xmlns="http://www.w3.org/2000/svg"
-          class="hidden h-4 w-4"
+          className="hidden h-4 w-4"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -37,7 +35,7 @@ export default function Toggle() {
         </svg>
       </span>
 
-      <span class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"></span>
+      <span className="absolute inset-0 rounded-full bg-gray-500 transition peer-checked:bg-green-500"></span>
     </label>
   );
 }
