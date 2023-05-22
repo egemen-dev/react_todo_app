@@ -1,4 +1,4 @@
-export default function Icon({ size, name }) {
+export default function Icon({ size, name, dataKey }) {
   function renderSize(size) {
     switch (size) {
       case "sm":
@@ -31,8 +31,14 @@ export default function Icon({ size, name }) {
       strokeWidth={1.5}
       stroke="currentColor"
       className={renderSize(size)}
+      data-key={dataKey}
     >
-      <path strokeLinecap="round" strokeLinejoin="round" d={renderIcon(name)} />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d={renderIcon(name)}
+        data-key={dataKey}
+      />
     </svg>
   );
 }
