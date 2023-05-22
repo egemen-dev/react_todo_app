@@ -75,75 +75,75 @@ function App() {
   }
 
   function handleDeleteStorage() {
+    if (!window.confirm("Are you sure to delete the whole list?")) return;
+
+    const todoInput = document.getElementById("todoInput");
+    todoInput.value = "";
     localStorage.removeItem("todoList");
     setTodoList([]);
   }
 
   return (
-    <div
-      className={"dark:bg-slate-900 h-screen flex flex-col items-center justify-around"}
-    >
-      <ReactSortable
-        list={todoList}
-        setList={setTodoList}
-        animation="200"
-        easing="ease-out"
-        className="w-full flex flex-col items-center gap-6 overflow-auto pt-6"
+    <>
+      <div className="dark:bg-slate-900 flex items-center justify-end gap-4 position-fixed top-0 right-0 p-2 bg-gray-100 dark:bg-slate-950 px-4">
+        <Toggle />
+      </div>
+      <div
+        className={"dark:bg-slate-900 h-screen flex flex-col items-center justify-around"}
       >
-        {todoList.map((todo) => (
-          <Task id={todo.id} key={todo.id}>
-            <Checkbox
-              dataKey={todo.id}
-              value={todo.isDone}
-              onChange={handleCheckboxChange}
-            />
-            <p className="dark:text-gray-100 col-span-6 break-words cursor-pointer">
-              {todo.content}
-            </p>
-            <div className="col-span-3 flex justify-end gap-4 min-w-max">
-              <Button
-                color={"lime"}
+        <ReactSortable
+          list={todoList}
+          setList={setTodoList}
+          animation="200"
+          easing="ease-out"
+          className="w-full flex flex-col items-center gap-6 overflow-auto pt-6"
+        >
+          {todoList.map((todo) => (
+            <Task id={todo.id} key={todo.id}>
+              <Checkbox
                 dataKey={todo.id}
-                onClick={handleEdit}
-                icon={<Icon name="edit" size="md" dataKey={todo.id} />}
+                value={todo.isDone}
+                onChange={handleCheckboxChange}
               />
-              <Button
-                color={"sunset"}
-                dataKey={todo.id}
-                onClick={handleDelete}
-                icon={<Icon name="delete" size="md" dataKey={todo.id} />}
-              />
-            </div>
-          </Task>
-        ))}
-      </ReactSortable>
-
-      <form
-        className="flex items-center justify-center w-11/12 md:w-1/3 pt-6"
-        onSubmit={handleSubmit}
-      >
-        <Input id="todoInput" name="content" />
-        <Button
-          color={"ocean"}
-          id="submitButton"
-          type="submit"
-          label={"Add"}
-          icon={<Icon name="add-plus" size="md" />}
-        />
-      </form>
-
-      {todoList.length > 0 && (
-        <div className="w-full col-span-3 flex justify-center gap-4 pt-6">
+              <p className="dark:text-gray-100 col-span-6 break-words cursor-pointer">
+                {todo.content}
+              </p>
+              <div className="col-span-3 flex justify-end gap-4 min-w-max">
+                <Button
+                  color={"lime"}
+                  dataKey={todo.id}
+                  onClick={handleEdit}
+                  icon={<Icon name="edit" size="md" dataKey={todo.id} />}
+                />
+                <Button
+                  color={"sunset"}
+                  dataKey={todo.id}
+                  onClick={handleDelete}
+                  icon={<Icon name="backspace" size="md" dataKey={todo.id} />}
+                />
+              </div>
+            </Task>
+          ))}
+        </ReactSortable>
+        <form
+          className="flex items-center justify-center w-full xl:w-1/3 pt-6"
+          onSubmit={handleSubmit}
+        >
           <Button
             color={"sunset"}
-            label="Empty List"
-            icon={<Icon name="backspace" size="md" />}
+            icon={<Icon name="delete" size="md" />}
             onClick={handleDeleteStorage}
           />
-        </div>
-      )}
-      <Toggle></Toggle>
-    </div>
+          <Input id="todoInput" name="content" />
+          <Button
+            color={"ocean"}
+            id="submitButton"
+            type="submit"
+            icon={<Icon name="add-plus" size="md" />}
+          />
+        </form>
+      </div>
+    </>
   );
 }
 
