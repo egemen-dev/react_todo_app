@@ -88,9 +88,7 @@ function App() {
       <div className="dark:bg-slate-900 flex items-center justify-end gap-4 position-fixed top-0 right-0 p-2 bg-gray-100 dark:bg-slate-950 px-4">
         <Toggle />
       </div>
-      <div
-        className={"dark:bg-slate-900 h-screen flex flex-col items-center justify-around"}
-      >
+      <div className="dark:bg-slate-900 h-screen flex flex-col items-center justify-around">
         <ReactSortable
           list={todoList}
           setList={setTodoList}
@@ -126,7 +124,7 @@ function App() {
           ))}
         </ReactSortable>
         <form
-          className="flex items-center justify-center w-full xl:w-1/3 pt-6"
+          className="flex items-center justify-between px-4 w-full xl:w-1/3 pt-6"
           onSubmit={handleSubmit}
         >
           <Button
