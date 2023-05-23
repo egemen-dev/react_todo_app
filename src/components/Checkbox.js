@@ -1,8 +1,8 @@
 export default function Checkbox({ dataKey, value, onChange }) {
   return (
-    <div className="relative col-span-1 rounded-full">
+    <div className="relative col-span-1 rounded-full flex justify-start items-center">
       <input
-        className="h-5 w-5 cursor-pointer accent-green-600 rounded-lg"
+        className="h-5 w-5 cursor-pointer accent-green-600 dark:accent-green-500 rounded-lg"
         type="checkbox"
         data-key={dataKey}
         checked={value}
