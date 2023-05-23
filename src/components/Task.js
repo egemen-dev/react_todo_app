@@ -1,6 +1,10 @@
 export default function Task({ id, key, children }) {
   return (
-    <div id={id} key={key} class="grid grid-cols-10 gap-2 items-center w-11/12 md:w-1/2">
+    <div
+      id={id}
+      key={key}
+      className="grid grid-cols-10 gap-2 items-center w-11/12 md:w-1/2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg px-4 py-2"
+    >
       {children}
     </div>
   );
