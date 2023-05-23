@@ -140,7 +140,7 @@ function App() {
                   value={todo.isDone}
                   onChange={handleCheckboxChange}
                 />
-                <p className="dark:text-gray-100 col-span-6 break-words cursor-pointer">
+                <p className="dark:text-gray-100 col-span-6 break-words">
                   {todo.content}
                 </p>
                 <div className="col-span-3 flex justify-end gap-4 min-w-max">
