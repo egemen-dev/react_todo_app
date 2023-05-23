@@ -121,9 +121,10 @@ function App() {
         <ReactSortable
           list={todoList}
           setList={setTodoList}
-          animation="200"
-          easing="ease-out"
           className="w-full flex flex-col items-center gap-6 overflow-auto pt-6"
+          animation={400}
+          delayOnTouchStart={true}
+          delay={8}
         >
           {todoList.length === 0 ? (
             <div className="flex flex-col items-center gap-4 px-6">
@@ -145,12 +146,14 @@ function App() {
                 </p>
                 <div className="col-span-3 flex justify-end gap-4 min-w-max">
                   <Button
+                    size={"sm"}
                     color={"lime"}
                     dataKey={todo.id}
                     onClick={handleEdit}
                     icon={<Icon name="edit" size="md" dataKey={todo.id} />}
                   />
                   <Button
+                    size={"sm"}
                     color={"sunset"}
                     dataKey={todo.id}
                     onClick={handleDelete}
@@ -167,12 +170,14 @@ function App() {
           onKeyDown={handleKeyDown}
         >
           <Button
+            size={"lg"}
             color={"sunset"}
             icon={<Icon name="delete" size="md" />}
             onClick={handleDeleteStorage}
           />
           <Input id="todoInput" name="content" />
           <Button
+            size={"lg"}
             color={"ocean"}
             type="submit"
             icon={<Icon name="add-plus" size="md" />}
