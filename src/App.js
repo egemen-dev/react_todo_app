@@ -124,7 +124,8 @@ function App() {
           className="w-full flex flex-col items-center gap-6 overflow-auto pt-6"
           animation={400}
           delayOnTouchStart={true}
-          delay={8}
+          delay={10}
+          handle=".handle"
         >
           {todoList.length === 0 ? (
             <div className="flex flex-col items-center gap-4 px-6">
@@ -141,7 +142,7 @@ function App() {
                   value={todo.isDone}
                   onChange={handleCheckboxChange}
                 />
-                <p className="dark:text-gray-100 col-span-6 break-words">
+                <p className="dark:text-gray-100 col-span-6 break-words handle cursor-pointer">
                   {todo.content}
                 </p>
                 <div className="col-span-3 flex justify-end gap-4 min-w-max">
