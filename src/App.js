@@ -27,8 +27,6 @@ function App() {
       case "Enter":
         return handleSubmit(e);
       case "Delete":
-        return handleDeleteStorage(e);
-      case "Escape":
         return handleRemoveLastTask(e);
     }
   }
@@ -39,12 +37,12 @@ function App() {
 
     if (todoInput.value === "") return;
 
-    if (todoInput.value.length > 140) {
+    if (todoInput.value.length > 150) {
       alert("Task is too long!");
       return;
     }
 
-    if (todoList.length >= 14) {
+    if (todoList.length >= 20) {
       alert("Too many tasks!");
       return;
     }
@@ -58,6 +56,13 @@ function App() {
     setTodoList([...todoList, newTodo]);
     todoInput.value = "";
     localStorage.setItem("todoList", JSON.stringify([...todoList, newTodo]));
+
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+
+    todoInput.focus();
   }
 
   function handleDelete(e) {
@@ -94,15 +99,6 @@ function App() {
     localStorage.setItem("todoList", JSON.stringify(newList));
   }
 
-  function handleDeleteStorage() {
-    if (!window.confirm("Are you sure to delete the whole list?")) return;
-
-    const todoInput = document.getElementById("todoInput");
-    todoInput.value = "";
-    localStorage.removeItem("todoList");
-    setTodoList([]);
-  }
-
   function handleRemoveLastTask() {
     const todoInput = document.getElementById("todoInput");
     const newList = todoList.slice(0, -1);
@@ -114,75 +110,65 @@ function App() {
 
   return (
     <>
-      <div className="dark:bg-slate-900 flex items-center justify-end gap-4 position-fixed top-0 right-0 p-2 bg-gray-100 dark:bg-slate-950 px-4">
+      <nav className="backdrop-blur-md flex items-center justify-end z-50 fixed w-full top-0 right-0 p-2 px-4 h-12 border-solid border-b border-gray-300 dark:border-gray-700">
         <Toggle />
-      </div>
-      <div className="dark:bg-slate-900 h-screen flex flex-col items-center justify-around">
-        <ReactSortable
-          list={todoList}
-          setList={setTodoList}
-          className="w-full flex flex-col items-center gap-6 overflow-auto pt-6"
-          animation={400}
-          delayOnTouchStart={true}
-          delay={10}
-          handle=".handle"
-        >
-          {todoList.length === 0 ? (
-            <div className="flex flex-col items-center gap-4 px-6">
-              <p className="text-xl text-gray-500 dark:text-gray-400">{quote["quote"]}</p>
-              <p className="text-gray-400 text-sm dark:text-gray-500 place-self-end italic">
-                {quote["author"]}
+      </nav>
+      <ReactSortable
+        list={todoList}
+        setList={setTodoList}
+        className="w-full flex flex-col items-center rounded-lg mt-16 mb-48 gap-4"
+        animation={400}
+        delayOnTouchStart={true}
+        delay={10}
+        handle=".handle"
+        id="taskList"
+      >
+        {todoList.length === 0 ? (
+          <div className="flex flex-col items-center gap-4 px-6">
+            <p className="text-xl text-gray-500 dark:text-gray-400">{quote["quote"]}</p>
+            <p className="text-gray-400 text-sm dark:text-gray-500 place-self-end italic">
+              {quote["author"]}
+            </p>
+          </div>
+        ) : (
+          todoList.map((todo) => (
+            <Task id={todo.id} key={todo.id}>
+              <Checkbox
+                dataKey={todo.id}
+                value={todo.isDone}
+                onChange={handleCheckboxChange}
+              />
+              <p className="dark:text-gray-200 col-span-6 break-words handle cursor-pointer text-gray-800 text-lg">
+                {todo.content}
               </p>
-            </div>
-          ) : (
-            todoList.map((todo) => (
-              <Task id={todo.id} key={todo.id}>
-                <Checkbox
+              <div className="col-span-3 flex justify-end gap-4 min-w-max">
+                <Button
+                  size={"sm"}
+                  color={"default"}
                   dataKey={todo.id}
-                  value={todo.isDone}
-                  onChange={handleCheckboxChange}
+                  onClick={handleEdit}
+                  icon={<Icon name="edit" size="md" dataKey={todo.id} />}
                 />
-                <p className="dark:text-gray-100 col-span-6 break-words handle cursor-pointer">
-                  {todo.content}
-                </p>
-                <div className="col-span-3 flex justify-end gap-4 min-w-max">
-                  <Button
-                    size={"sm"}
-                    color={"lime"}
-                    dataKey={todo.id}
-                    onClick={handleEdit}
-                    icon={<Icon name="edit" size="md" dataKey={todo.id} />}
-                  />
-                  <Button
-                    size={"sm"}
-                    color={"sunset"}
-                    dataKey={todo.id}
-                    onClick={handleDelete}
-                    icon={<Icon name="backspace" size="md" dataKey={todo.id} />}
-                  />
-                </div>
-              </Task>
-            ))
-          )}
-        </ReactSortable>
+                <Button
+                  size={"sm"}
+                  color={"default"}
+                  dataKey={todo.id}
+                  onClick={handleDelete}
+                  icon={<Icon name="backspace" size="md" dataKey={todo.id} />}
+                />
+              </div>
+            </Task>
+          ))
+        )}
+      </ReactSortable>
+      <div className="flex justify-center items-center w-full h-24 fixed bottom-0 left-0 bg-gray-50 dark:bg-slate-950 border-solid border-t border-gray-300 dark:border-gray-700">
         <form
-          className="flex items-center justify-between px-4 w-full xl:w-1/3 pt-6"
+          className="flex items-center justify-around px-3 w-full md:w-1/2"
           onSubmit={handleSubmit}
           onKeyDown={handleKeyDown}
         >
-          <Button
-            size={"lg"}
-            color={"sunset"}
-            icon={<Icon name="delete" size="md" />}
-            onClick={handleDeleteStorage}
-          />
           <Input id="todoInput" name="content" />
-          <Button
-            size={"lg"}
-            color={"ocean"}
-            type="submit"
-            icon={<Icon name="add-plus" size="md" />}
-          />
+          <Button type="submit" icon={<Icon name="add-plus" size="md" />} />
         </form>
       </div>
     </>
