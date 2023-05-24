@@ -143,15 +143,11 @@ function App() {
               </p>
               <div className="col-span-3 flex justify-end gap-4 min-w-max">
                 <Button
-                  size={"sm"}
-                  color={"default"}
                   dataKey={todo.id}
                   onClick={handleEdit}
                   icon={<Icon name="edit" size="md" dataKey={todo.id} />}
                 />
                 <Button
-                  size={"sm"}
-                  color={"default"}
                   dataKey={todo.id}
                   onClick={handleDelete}
                   icon={<Icon name="backspace" size="md" dataKey={todo.id} />}
