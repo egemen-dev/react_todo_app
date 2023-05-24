@@ -45,7 +45,7 @@ export default function Toggle() {
         </svg>
       </span>
 
-      <span className="absolute inset-0 rounded-full bg-slate-800 transition peer-checked:bg-gray-300"></span>
+      <span className="absolute inset-0 rounded-full bg-gray-900 transition peer-checked:bg-gray-300"></span>
     </label>
   );
 }
