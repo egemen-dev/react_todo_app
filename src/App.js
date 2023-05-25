@@ -1,11 +1,8 @@
 import "./index.css";
-import Task from "./components/Task";
-import Input from "./components/Input";
-import Icon from "./components/Icon";
+import Form from "./components/Form";
 import Quotes from "./quotes/list.json";
-import Toggle from "./components/Toggle";
-import Button from "./components/Button";
-import Checkbox from "./components/Checkbox";
+import Navbar from "./components/Navbar";
+import Checklist from "./components/Checklist";
 import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
@@ -37,12 +34,12 @@ function App() {
 
     if (todoInput.value === "") return;
 
-    if (todoInput.value.length > 150) {
+    if (todoInput.value.length > 250) {
       alert("Task is too long!");
       return;
     }
 
-    if (todoList.length >= 20) {
+    if (todoList.length >= 25) {
       alert("Too many tasks!");
       return;
     }
@@ -110,9 +107,7 @@ function App() {
 
   return (
     <>
-      <nav className="backdrop-blur-md flex items-center justify-end z-50 fixed w-full top-0 right-0 p-2 px-4 h-12 border-solid border-b border-gray-300 dark:border-gray-700">
-        <Toggle />
-      </nav>
+      <Navbar />
       <ReactSortable
         list={todoList}
         setList={setTodoList}
@@ -121,52 +116,16 @@ function App() {
         delayOnTouchStart={true}
         delay={10}
         handle=".handle"
-        id="taskList"
       >
-        {todoList.length === 0 ? (
-          <div className="flex flex-col items-center gap-4 px-6">
-            <p className="text-xl text-gray-500 dark:text-gray-400">{quote["quote"]}</p>
-            <p className="text-gray-400 text-sm dark:text-gray-500 place-self-end italic">
-              {quote["author"]}
-            </p>
-          </div>
-        ) : (
-          todoList.map((todo) => (
-            <Task id={todo.id} key={todo.id}>
-              <Checkbox
-                dataKey={todo.id}
-                value={todo.isDone}
-                onChange={handleCheckboxChange}
-              />
-              <p className="dark:text-gray-200 col-span-6 break-words handle cursor-pointer text-gray-800 text-lg">
-                {todo.content}
-              </p>
-              <div className="col-span-3 flex justify-end gap-4 min-w-max">
-                <Button
-                  dataKey={todo.id}
-                  onClick={handleEdit}
-                  icon={<Icon name="edit" size="md" dataKey={todo.id} />}
-                />
-                <Button
-                  dataKey={todo.id}
-                  onClick={handleDelete}
-                  icon={<Icon name="backspace" size="md" dataKey={todo.id} />}
-                />
-              </div>
-            </Task>
-          ))
-        )}
+        <Checklist
+          todoList={todoList}
+          handleCheckboxChange={handleCheckboxChange}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          quote={quote}
+        />
       </ReactSortable>
-      <div className="flex justify-center items-center w-full h-24 fixed bottom-0 left-0 bg-gray-50 dark:bg-slate-950 border-solid border-t border-gray-300 dark:border-gray-700">
-        <form
-          className="flex items-center justify-around px-3 w-full md:w-1/2"
-          onSubmit={handleSubmit}
-          onKeyDown={handleKeyDown}
-        >
-          <Input id="todoInput" name="content" />
-          <Button type="submit" icon={<Icon name="add-plus" size="md" />} />
-        </form>
-      </div>
+      <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown} />
     </>
   );
 }
