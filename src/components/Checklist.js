@@ -6,10 +6,9 @@ export default function List({
   handleCheckboxChange,
   handleEdit,
   handleDelete,
-  quote,
 }) {
   return todoList.length === 0 ? (
-    <Quote quote={quote} />
+    <Quote />
   ) : (
     todoList.map((todo) => (
       <Task

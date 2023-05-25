@@ -1,6 +1,5 @@
 import "./index.css";
 import Form from "./components/Form";
-import Quotes from "./quotes/list.json";
 import Navbar from "./components/Navbar";
 import Checklist from "./components/Checklist";
 import { useState } from "react";
@@ -12,12 +11,6 @@ function App() {
       ? JSON.parse(localStorage.getItem("todoList"))
       : []
   );
-
-  const [quote, setQuote] = useState(getRandomQuote());
-
-  function getRandomQuote() {
-    return Quotes["quotes"][Math.floor(Math.random() * Quotes["quotes"].length)];
-  }
 
   function handleKeyDown(e) {
     switch (e.key) {
@@ -122,7 +115,6 @@ function App() {
           handleCheckboxChange={handleCheckboxChange}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
-          quote={quote}
         />
       </ReactSortable>
       <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown} />
